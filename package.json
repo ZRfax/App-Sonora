@@ -1,0 +1,57 @@
+{
+  "name": "sonora",
+  "version": "1.0.0",
+  "description": "Sonora — reproductor de escritorio con música en la nube (Audius) y biblioteca local",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "package": "taskkill /F /IM Sonora.exe /T 2>nul & npm run build && electron-packager . Sonora --platform=win32 --arch=x64 --out=dist --overwrite --asar --ignore=\"^/(src|dist|\\.git|\\.vite|\\.claude)(/|$)\"",
+    "package:win": "npm run package"
+  },
+  "dependencies": {
+    "electron-store": "^8.2.0",
+    "lucide-react": "^0.370.0",
+    "music-metadata": "^7.14.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@electron/packager": "^19.1.0",
+    "@types/node": "^25.5.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.0"
+  },
+  "build": {
+    "appId": "com.zabdiel.sonora",
+    "productName": "Sonora",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist-installer"
+    },
+    "files": [
+      "**/*",
+      "!src/**",
+      "!dist/**",
+      "!dist-installer/**",
+      "!.git/**",
+      "!.vscode/**",
+      "!.claude/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    }
+  }
+}
